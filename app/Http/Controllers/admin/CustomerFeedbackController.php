@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Http\Controllers\admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\CustomerFeedbackModel;
+
+class CustomerFeedbackController extends Controller
+{
+    public function index(){
+        return view('admin.customer_feedback.index');
+    }
+    public function list(){
+        try {
+            $list=CustomerFeedbackModel::with(['user'])->get();
+            return $list;
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+    }
+    public function submit_add(Request $req){
+        try {
+            $all=$req->all();
+            $ins=CustomerFeedbackModel::create($all);
+            return $ins;
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+    }
+    public function submit_delete(Request $req){
+        try {
+            $all=$req->all();
+            $del=CustomerFeedbackModel::where('id',$all['customer_feedback_id'])->delete();
+            return $del;
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+    }
+    public function submit_edit(Request $req){
+        try {
+            $all=$req->all();
+            $data=$all['data'];
+            $upd=CustomerFeedbackModel::where('id',$all['customer_feedback_id'])->update($data);
+            return $upd;
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+    }
+}
