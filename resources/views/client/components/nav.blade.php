@@ -5,7 +5,7 @@
         <span class="oi oi-menu"></span> Menu
       </button>
 
-      <div class="collapse navbar-collapse" id="ftco-nav">
+      <div class="collapse navbar-collapse" id="ftco-nav" style="visibility: visible;">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
             <a href="/client/home" class="nav-link">Home</a>

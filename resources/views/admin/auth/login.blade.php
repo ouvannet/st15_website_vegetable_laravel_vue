@@ -14,9 +14,9 @@
             <!-- Left Image Section -->
             <div class="col-md-6 d-none d-md-block">
                 <div class="h-100">
-                    <img src="/admin/assets/img/loginimage.jpg" 
-                         alt="Login Image" 
-                         class="img-fluid w-100 h-100" 
+                    <img src="/admin/assets/img/loginimage.jpg"
+                         alt="Login Image"
+                         class="img-fluid w-100 h-100"
                          style="object-fit: cover;">
                 </div>
             </div>
@@ -45,19 +45,19 @@
                         @csrf
                         <div class="mb-3">
                             <label for="email" class="form-label fw-bold">Email</label>
-                            <input type="email" value="seyha@gmail.com" name="email" id="email" 
+                            <input type="email" value="mm@gmail.com" name="email" id="email"
                                    class="form-control" placeholder="Enter your email" required>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label fw-bold">Password</label>
-                            <input type="password" value="123" name="password" id="password" 
+                            <input type="password" value="123" name="password" id="password"
                                    class="form-control" placeholder="Enter your password" required>
                         </div>
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary btn-lg">Login</button>
                         </div>
                         <div class="text-center mt-3">
-                            <small class="text-muted">Don't have an account? 
+                            <small class="text-muted">Don't have an account?
                                 <a href="#" class="text-decoration-none">Sign up</a>
                             </small>
                         </div>

@@ -31,7 +31,7 @@
 <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    @include('client.components.head_info')
+    {{-- @include('client.components.head_info') --}}
     @include('client.components.nav')
 
     <main>

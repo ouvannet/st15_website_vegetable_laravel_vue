@@ -8,13 +8,13 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="firstname">Firt Name</label>
-                <input type="text" class="form-control" placeholder="">
+                <input v-model="billingDetails.firstName" type="text" class="form-control" placeholder="">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="lastname">Last Name</label>
-                <input type="text" class="form-control" placeholder="">
+                <input v-model="billingDetails.lastName" type="text" class="form-control" placeholder="">
               </div>
             </div>
             <div class="w-100"></div>
@@ -23,7 +23,8 @@
                 <label for="country">State / Country</label>
                 <div class="select-wrap">
                   <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                  <select name="" id="" class="form-control">
+                  <select v-model="billingDetails.country" name="" id="" class="form-control">
+                    <option value="">Cambodia</option>
                     <option value="">France</option>
                     <option value="">Italy</option>
                     <option value="">Philippines</option>
@@ -38,49 +39,42 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="streetaddress">Street Address</label>
-                <input type="text" class="form-control" placeholder="House number and street name">
+                <input v-model="billingDetails.street" type="text" class="form-control" placeholder="House number and street name">
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Appartment, suite, unit etc: (optional)">
-              </div>
-            </div>
-            <div class="w-100"></div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="towncity">Town / City</label>
-                <input type="text" class="form-control" placeholder="">
+                <input v-model="billingDetails.city" type="text" class="form-control" placeholder="">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="postcodezip">Postcode / ZIP *</label>
-                <input type="text" class="form-control" placeholder="">
+                <input v-model="billingDetails.postCode" type="text" class="form-control" placeholder="">
               </div>
             </div>
-            <div class="w-100"></div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="phone">Phone</label>
-                <input type="text" class="form-control" placeholder="">
+                <input v-model="billingDetails.phone" type="text" class="form-control" placeholder="">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="emailaddress">Email Address</label>
-                <input type="text" class="form-control" placeholder="">
+                <input v-model="billingDetails.email" type="text" class="form-control" placeholder="">
               </div>
             </div>
             <div class="w-100"></div>
-            <div class="col-md-12">
+            {{-- <div class="col-md-12">
               <div class="form-group mt-4">
                 <div class="radio">
                   <label class="mr-3"><input type="radio" name="optradio"> Create an Account? </label>
                   <label><input type="radio" name="optradio"> Ship to different address</label>
                 </div>
               </div>
-            </div>
+            </div> --}}
           </div>
         </form><!-- END -->
       </div>
@@ -91,20 +85,20 @@
               <h3 class="billing-heading mb-4">Cart Total</h3>
               <p class="d-flex">
                 <span>Subtotal</span>
-                <span>$20.60</span>
+                <span>$@{{subTotal}}</span>
               </p>
               <p class="d-flex">
                 <span>Delivery</span>
-                <span>$0.00</span>
+                <span>$@{{totalDelivery}}</span>
               </p>
               <p class="d-flex">
                 <span>Discount</span>
-                <span>$3.00</span>
+                <span>$@{{totalDiscount}}</span>
               </p>
               <hr>
               <p class="d-flex total-price">
                 <span>Total</span>
-                <span>$17.60</span>
+                <span>$@{{subTotal+totalDelivery+totalDiscount}}</span>
               </p>
             </div>
           </div>
@@ -125,7 +119,7 @@
                   </div>
                 </div>
               </div>
-              <p><a href="#"class="btn btn-primary py-3 px-4">Place an order</a></p>
+              <p><a id="order-btn" class="btn btn-primary py-3 px-4" style="color:white;">Place an order</a></p>
             </div>
           </div>
         </div>
