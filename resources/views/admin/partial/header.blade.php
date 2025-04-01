@@ -3,13 +3,8 @@
 $user=[];
 try {
     session_start();
-    $user=($_SESSION["user_data"]);
-    // dd($user);
-} catch (\Throwable $th) {
-    echo '<script>
-        window.location.href = "/login";
-    </script>';
-}
+    $user=session('user_data');
+} catch (\Throwable $th) {}
 ?>
     <div id="header" class="app-header">
         <!-- BEGIN mobile-toggler -->

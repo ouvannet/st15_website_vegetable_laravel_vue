@@ -7,25 +7,54 @@
 
       <div class="collapse navbar-collapse" id="ftco-nav" style="visibility: visible;">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a href="/client/home" class="nav-link">Home</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="/client/shop" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown04">
-                <a class="dropdown-item" href="/client/shop">Shop</a>
-                <a class="dropdown-item" href="/client/wishlist">Wishlist</a>
-              {{-- <a class="dropdown-item" href="/client/shop/single_product">Single Product</a> --}}
-              <a class="dropdown-item" href="/client/cart">Cart</a>
-              <a class="dropdown-item" href="/client/checkout">Checkout</a>
-            </div>
-          </li>
-          <li class="nav-item"><a href="/client/about" class="nav-link">About</a></li>
-          <li class="nav-item"><a href="/client/blog" class="nav-link">Blog</a></li>
-          <li class="nav-item"><a href="/client/contact" class="nav-link">Contact</a></li>
-          <li class="nav-item cta cta-colored"><a href="/client/cart" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-
+            <li class="nav-item {{ Route::getCurrentRoute()->uri==('client/home') ? 'active' : '' }}">
+                <a href="{{ url('/client/home') }}" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item dropdown {{ Route::getCurrentRoute()->uri==('client/shop') ? 'active' : '' }}">
+                <a class="nav-link dropdown-toggle" href="{{ url('/client/shop') }}" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown04">
+                    <a class="dropdown-item {{ Route::getCurrentRoute()->uri==('client/shop') ? 'active' : '' }}" href="{{ url('/client/shop') }}">Shop</a>
+                    <a class="dropdown-item {{ Route::getCurrentRoute()->uri==('client/wishlist') ? 'active' : '' }}" href="{{ url('/client/wishlist') }}">Wishlist</a>
+                    <a class="dropdown-item {{ Route::getCurrentRoute()->uri==('client/cart') ? 'active' : '' }}" href="{{ url('/client/cart') }}">Cart</a>
+                    <a class="dropdown-item {{ Route::getCurrentRoute()->uri==('client/checkout') ? 'active' : '' }}" href="{{ url('/client/checkout') }}">Checkout</a>
+                </div>
+            </li>
+            <li class="nav-item {{ Route::getCurrentRoute()->uri==('client/about') ? 'active' : '' }}">
+                <a href="{{ url('/client/about') }}" class="nav-link">About</a>
+            </li>
+            <li class="nav-item {{ Route::getCurrentRoute()->uri==('client/blog') ? 'active' : '' }}">
+                <a href="{{ url('/client/blog') }}" class="nav-link">Blog</a>
+            </li>
+            <li class="nav-item {{ Route::getCurrentRoute()->uri==('client/contact') ? 'active' : '' }}">
+                <a href="{{ url('/client/contact') }}" class="nav-link">Contact</a>
+            </li>
+            <li id="app2" class="nav-item cta cta-colored {{ Route::getCurrentRoute()->uri==('client/cart') ? 'active' : '' }}">
+                <a href="{{ url('/client/cart') }}" class="nav-link">
+                    <span class="icon-shopping_cart"></span>
+                    [@{{ countDataCart.length }}]
+                </a>
+            </li>
         </ul>
       </div>
     </div>
 </nav>
+<script type="module">
+    const { createApp, ref } = Vue;
+    import { CacheManager } from "/client/js/cache.js";
+    const cartManager = new CacheManager('cart');
+    createApp({
+        setup() {
+            const baseUrl= "{{ asset('') }}";
+            var countDataCart=ref([]);
+            const getCart=()=>{
+                countDataCart.value=Object.keys(cartManager.getList());
+            }
+            setInterval(() => {
+                getCart();
+            }, 500);
+            return {
+                countDataCart
+            };
+        }
+    }).mount('#app2');
+</script>

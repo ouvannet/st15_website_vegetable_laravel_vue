@@ -5,19 +5,28 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ProductModel;
+use Yajra\DataTables\DataTables;
 
 class ProductsController extends Controller
 {
     public function index(){
         return view('admin.products.index');
     }
-    public function list(){
+    public function list_data(){
         try {
             $list=ProductModel::with(['category', 'brand','baseUnit'])->get();
             return $list;
         } catch (\Throwable $th) {
             dd($th);
         }
+    }
+    public function list(Request $request)
+    {
+        if ($request->ajax()) {
+            $products = ProductModel::with(['category', 'brand', 'baseUnit'])->get();
+            return DataTables::of($products)->make(true);
+        }
+        return view('admin.products.index');
     }
     public function submit_add(Request $req){
         try {

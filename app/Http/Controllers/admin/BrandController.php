@@ -5,16 +5,21 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BrandModel;
+use Yajra\DataTables\DataTables;
 
 class BrandController extends Controller
 {
     public function index(){
         return view('admin.brand.index');
     }
-    public function list(){
+    public function list(Request $request){
         try {
-            $list=BrandModel::get();
-            return $list;
+            // $list=BrandModel::get();
+            // return $list;
+            if ($request->ajax()) {
+                $list = BrandModel::get();
+                return DataTables::of($list)->make(true);
+            }
         } catch (\Throwable $th) {
             dd($th);
         }

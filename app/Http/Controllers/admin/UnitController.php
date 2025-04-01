@@ -5,16 +5,29 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\UnitModel;
+use Yajra\DataTables\DataTables;
 
 class UnitController extends Controller
 {
     public function index(){
         return view('admin.unit.index');
     }
-    public function list(){
+    public function list_data(Request $request){
         try {
             $list=UnitModel::get();
             return $list;
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+    }
+    public function list(Request $request){
+        try {
+            // $list=UnitModel::get();
+            // return $list;
+            if ($request->ajax()) {
+                $list = UnitModel::get();
+                return DataTables::of($list)->make(true);
+            }
         } catch (\Throwable $th) {
             dd($th);
         }

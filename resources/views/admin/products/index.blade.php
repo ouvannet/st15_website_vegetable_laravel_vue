@@ -30,7 +30,7 @@
                         Add @{{mainTitle}}
                     </button>
                 </div>
-                <table class="table table-striped mb-0">
+                <table id="productsTable" class="table table-striped mb-0">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -45,7 +45,7 @@
                             <th scope="col" class="text-end">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    {{-- <tbody>
                         <tr v-for="(product, index) in dataTable" :key="index">
                             <td>@{{product.id}}</td>
                             <td>
@@ -74,7 +74,7 @@
                                 </div>
                             </td>
                         </tr>
-                    </tbody>
+                    </tbody> --}}
 
                 </table>
             </div>
@@ -87,7 +87,7 @@
 
 @push('js')
     <script>
-        const { createApp, ref } = Vue;
+        const { createApp, ref, onMounted } = Vue;
         createApp({
             setup() {
                 const sampleData=ref({
@@ -116,10 +116,13 @@
                         }
                     }
                 });
+                const errors = ref({});
+                const addProductSuccess = ref(false);
+
                 const mainTitle=ref("Product");
                 const baseUrl= "{{ asset('') }}";
                 const formAdd=ref(sampleData.value.formAdd)
-                const addProductSuccess=false;
+                // const addProductSuccess=false;
                 const formEdit=ref(sampleData.value.formEdit)
                 const dataTable=ref([]);
                 const dataCategory=ref([]);
@@ -127,6 +130,118 @@
                 const dataUnit=ref([]);
                 const delete_id=ref(0);
                 const is_edit=ref(false);
+
+                // Validation function
+                const validateForm = () => {
+                    errors.value = {};
+
+                    if (!formAdd.value.name.trim()) {
+                        errors.value.name = 'Name is required';
+                    }
+                    if (!formAdd.value.category_id) {
+                        errors.value.category_id = 'Category is required';
+                    }
+                    if (!formAdd.value.brand_id) {
+                        errors.value.brand_id = 'Brand is required';
+                    }
+                    if (!formAdd.value.base_unit_id) {
+                        errors.value.base_unit_id = 'Unit is required';
+                    }
+                    if (!formAdd.value.base_price) {
+                        errors.value.base_price = 'Price is required';
+                    } else if (isNaN(formAdd.value.base_price) || Number(formAdd.value.base_price) <= 0) {
+                        errors.value.base_price = 'Price must be a valid number greater than 0';
+                    }
+                    if (!is_edit.value && !formAdd.value.image_url) {
+                        errors.value.image_url = 'Image is required for new products';
+                    }
+                    if (!formAdd.value.description.trim()) {
+                        errors.value.description = 'Description is required';
+                    }
+                    if (formAdd.value.is_active === '') {
+                        errors.value.is_active = 'Status is required';
+                    }
+
+                    return Object.keys(errors.value).length === 0;
+                };
+
+                const reloadDataTable = () => {
+                    $('#productsTable').DataTable().ajax.reload(null, false); // Reload without resetting pagination
+                };
+
+                const initDataTable = () => {
+                    const table = $('#productsTable').DataTable({
+                        processing: true,
+                        serverSide: true,
+                        ajax: {
+                            url: '/admin/products/list',
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                        },
+                        columns: [
+                            { data: 'id' },
+                            {
+                                data: 'image_url',
+                                render: function (data) {
+                                    return `<img src="${baseUrl}${data}" style="width: 60px; height: 60px;" />`;
+                                }
+                            },
+                            { data: 'name' },
+                            { data: 'category.name' },
+                            { data: 'brand.name' },
+                            { data: 'base_unit.name' },
+                            { data: 'base_price' },
+                            { data: 'stock_quantity' },
+                            {
+                                data: 'is_active',
+                                render: function (data) {
+                                    return data
+                                        ? '<span class="badge bg-primary">Active</span>'
+                                        : '<span class="badge bg-danger">Inactive</span>';
+                                }
+                            },
+                            {
+                                data: 'id',
+                                orderable: false,
+                                searchable: false,
+                                render: function (data) {
+                                    return `
+                                        <button class="btn btn-dark btn-sm edit-btn" data-id="${data}">
+                                            <i class="fa-solid fa-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm delete-btn" data-id="${data}">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    `;
+                                }
+                            }
+                        ],
+                        dom: '<"row"<"col-md-4"l><"col-md-4"B><"col-md-4"f>>' +'<"row"<"col-md-12"tr>>' + '<"row"<"col-md-5"i><"col-md-7"p>>',
+                        buttons: [
+                            { extend: 'copy', className: 'btn btn-dark btn-sm' },
+                            { extend: 'csv', className: 'btn btn-dark btn-sm' },
+                            { extend: 'excel', className: 'btn btn-dark btn-sm' },
+                            { extend: 'pdf', className: 'btn btn-dark btn-sm' },
+                            { extend: 'print', className: 'btn btn-dark btn-sm' }
+                        ]
+                    });
+
+                    // Event listener for edit and delete buttons
+                    $('#productsTable').on('click', '.edit-btn', function () {
+                        const row = table.row($(this).parents('tr')).data();
+                        handleEdit(row);
+                    });
+
+                    $('#productsTable').on('click', '.delete-btn', function () {
+                        const row = table.row($(this).parents('tr')).data();
+                        handleDelete(row.id);
+                    });
+                };
+
+                onMounted(() => {
+                    initDataTable();
+                });
+
                 const getList=async()=>{
                     try {
                         var {data} = await axios.post('/admin/products/list',{}, { headers: { 'Content-Type': 'multipart/form-data' } });
@@ -154,21 +269,25 @@
                     $("#ModalAddEdit").modal('toggle')
                 }
                 const handleSubmitAdd=async()=>{
+                    if (!validateForm()) return;
                     const {data} = await axios.post('/admin/products/submit_add',formAdd.value, { headers: { 'Content-Type': 'multipart/form-data' } });
                     formAdd.value=sampleData.value.formAdd;
                     addProductSuccess.value=true;
                     handleAdd();
                     getList();
+                    reloadDataTable();
                 }
                 const handleDelete=(product_id)=>{
                     $("#ModalDelete").modal('toggle');
                     delete_id.value=product_id;
                 }
                 const handleSubmitDelete=async()=>{
+                    // if (!validateForm()) return;
                     const {data} = await axios.post('/admin/products/submit_delete',{product_id:delete_id.value}, { headers: { 'Content-Type': 'multipart/form-data' } });
                     delete_id.value=0;
                     handleDelete();
                     getList();
+                    reloadDataTable();
                 }
                 const handleEdit=(data)=>{
                     is_edit.value=true;
@@ -192,6 +311,7 @@
                     formAdd.value=sampleData.value.formAdd;
                     handleAdd();
                     getList();
+                    reloadDataTable();
                 }
                 return {
                     mainTitle,
@@ -209,7 +329,8 @@
                     handleSubmitDelete,
                     is_edit,
                     handleEdit,
-                    handleSubmitEdit
+                    handleSubmitEdit,
+                    errors
                 };
             }
         }).mount('#app');

@@ -5,16 +5,21 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BlogModel;
+use Yajra\DataTables\DataTables;
 
 class BlogController extends Controller
 {
     public function index(){
         return view('admin.blog.index');
     }
-    public function list(){
+    public function list(Request $request){
         try {
-            $list=BlogModel::with(['author'])->get();
-            return $list;
+            // $list=BlogModel::with(['author'])->get();
+            // return $list;
+            if ($request->ajax()) {
+                $list = BlogModel::with(['author'])->get();
+                return DataTables::of($list)->make(true);
+            }
         } catch (\Throwable $th) {
             dd($th);
         }
@@ -22,7 +27,9 @@ class BlogController extends Controller
     public function submit_add(Request $req){
         try {
             $all=$req->all();
-            $user=$_SESSION["user_data"];
+            // $user=$_SESSION["user_data"];
+            $user = session('user_data');
+            // dd($user['id']);
             if(isset($user['id'])){
                 $all['create_by']=$user['id'];
             }

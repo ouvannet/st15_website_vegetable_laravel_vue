@@ -5,16 +5,21 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CategoryModel;
+use Yajra\DataTables\DataTables;
 
 class CategoryController extends Controller
 {
     public function index(){
         return view('admin.category.index');
     }
-    public function list(){
+    public function list(Request $request){
         try {
-            $list=CategoryModel::get();
-            return $list;
+            // $list=CategoryModel::get();
+            // return $list;
+            if ($request->ajax()) {
+                $list = CategoryModel::get();
+                return DataTables::of($list)->make(true);
+            }
         } catch (\Throwable $th) {
             dd($th);
         }

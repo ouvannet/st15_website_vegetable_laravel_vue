@@ -5,19 +5,25 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PaymentMethodModel;
+use Yajra\DataTables\DataTables;
 
 class PaymentMethodController extends Controller
 {
     public function index(){
         return view('admin.payment_method.index');
     }
-    public function list(){
+    public function list(Request $request){
         try {
-            $list=PaymentMethodModel::get();
-            return $list;
+            // $list=PaymentMethodModel::get();
+            // return $list;
+            if ($request->ajax()) {
+                $list = PaymentMethodModel::get();
+                return DataTables::of($list)->make(true);
+            }
         } catch (\Throwable $th) {
             dd($th);
         }
+
     }
     public function submit_add(Request $req){
         try {

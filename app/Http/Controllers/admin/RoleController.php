@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\RoleModel;
 use App\Models\PermissionModel;
 use App\Models\PermissionRoleModel;
+use Yajra\DataTables\DataTables;
 
 
 class RoleController extends Controller
@@ -13,10 +14,14 @@ class RoleController extends Controller
     public function index(){
         return view('admin.role.index');
     }
-    public function list(){
+    public function list(Request $request){
         try {
-            $list=RoleModel::get();
-            return $list;
+            // $list=RoleModel::get();
+            // return $list;
+            if ($request->ajax()) {
+                $list = RoleModel::get();
+                return DataTables::of($list)->make(true);
+            }
         } catch (\Throwable $th) {
             dd($th);
         }

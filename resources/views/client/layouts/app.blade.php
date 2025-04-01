@@ -29,8 +29,8 @@
     <link rel="stylesheet" href="{{ asset('client/css/style.css') }}">
 </head>
 <body>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="{{ asset('client/js/vue.global.js') }}"></script>
+    <script src="{{ asset('client/js/axios.min.js') }}"></script>
     {{-- @include('client.components.head_info') --}}
     @include('client.components.nav')
 
@@ -59,6 +59,6 @@
     <script src="{{ asset('client/js/google-map.js') }}"></script>
     <script src="{{ asset('client/js/main.js') }}"></script>
     {{-- <script src="{{ asset('client/js/wishlist.js') }}"></script> --}}
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    {{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script> --}}
 </body>
 </html>

@@ -16,6 +16,7 @@
         createApp({
             setup() {
                 const baseUrl= "{{ asset('') }}";
+                const param_cate_id="{{ isset($_GET['category']) ? $_GET['category'] : null }}";
                 const currentCategory=ref(0);
                 const dataProducts=ref([]);
                 const currentPage=ref(1);
@@ -50,17 +51,17 @@
                     }
                 }
                 getList();
-                getProductList();
+                getProductList(1,(param_cate_id??0));
                 const clickWishlist=(data)=>{
                     wishlistManager.addData(data);
-                    getProductList();
+                    getProductList(1,(param_cate_id??0));
                 }
                 const checkExistWishlist=(data)=>{
                     return wishlistManager.checkExist(data);
                 }
                 const clickCart=(data)=>{
                     cartManager.addData(data);
-                    getProductList();
+                    getProductList(1,(param_cate_id??0));
                 }
                 const checkExistCart=(data)=>{
                     return cartManager.checkExist(data);

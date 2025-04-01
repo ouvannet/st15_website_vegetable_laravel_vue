@@ -13,20 +13,20 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div v-for="(category,index) in dataCategory" class="category-wrap img mb-4 d-flex align-items-end" :style="'background-image: url('+baseUrl+category.image_url+');'">
+                        <a v-for="(category,index) in dataCategory" :href="'/client/shop?category='+category.id" class="category-wrap img mb-4 d-flex align-items-end" :style="'background-image: url('+baseUrl+category.image_url+');'">
                             <div class="text px-3 py-1">
-                                <h2 class="mb-0"><a href="#">@{{category.name}}</a></h2>
+                                <h2 class="mb-0">@{{category.name}}</h2>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div v-for="(category,index) in dataCategory2" class="category-wrap img mb-4 d-flex align-items-end" :style="'background-image: url('+baseUrl+category.image_url+');'">
+                <a v-for="(category,index) in dataCategory2" :href="'/client/shop?category='+category.id" class="category-wrap img mb-4 d-flex align-items-end" :style="'background-image: url('+baseUrl+category.image_url+');'">
                     <div class="text px-3 py-1">
-                        <h2 class="mb-0"><a href="#">@{{category.name}}</a></h2>
+                        <h2 class="mb-0">@{{category.name}}</h2>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>

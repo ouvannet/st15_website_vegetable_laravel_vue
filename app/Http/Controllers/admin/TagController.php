@@ -5,16 +5,21 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TagModel;
+use Yajra\DataTables\DataTables;
 
 class TagController extends Controller
 {
     public function index(){
         return view('admin.tag.index');
     }
-    public function list(){
+    public function list(Request $request){
         try {
-            $list=TagModel::get();
-            return $list;
+            // $list=TagModel::get();
+            // return $list;
+            if ($request->ajax()) {
+                $list = TagModel::get();
+                return DataTables::of($list)->make(true);
+            }
         } catch (\Throwable $th) {
             dd($th);
         }

@@ -14,7 +14,13 @@
         margin: 0;
         box-sizing: border-box;
     }
+    .dt-buttons {
+    margin-bottom: 10px;
+}
 
+.dt-buttons .btn {
+    margin-right: 5px;
+}
 
 </style>
 

@@ -38,24 +38,24 @@
             </div>
           </div>
           <div class="w-100"></div>
-          <div class="input-group col-md-6 d-flex mb-3">
-             <span class="input-group-btn mr-2">
+          <div class="input-group col-md-4 d-flex mb-3">
+             {{-- <span class="input-group-btn mr-2">
                 <button type="button" class="quantity-left-minus btn"  data-type="minus" data-field="">
                  <i class="ion-ios-remove"></i>
                 </button>
-              </span>
+              </span> --}}
              <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
-             <span class="input-group-btn ml-2">
+             {{-- <span class="input-group-btn ml-2">
                 <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
                    <i class="ion-ios-add"></i>
                </button>
-             </span>
+             </span> --}}
           </div>
           <div class="w-100"></div>
-          <div class="col-md-12">$@{{stockAvailable}} kg available</p>
+          <div class="col-md-12">@{{stockAvailable}} kg available</p>
           </div>
         </div>
-        <p><a href="#" class="btn btn-black py-3 px-5">Add to Cart</a></p>
+        <p><a href="#" @click="clickCart(dataProduct)" class="btn btn-black py-3 px-5" :style="is_inCart?'background:gray;':''">Add to Cart</a></p>
       </div>
     </div>
   </div>

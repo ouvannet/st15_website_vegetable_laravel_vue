@@ -13,7 +13,7 @@
                         Add @{{mainTitle}}
                     </button>
                 </div>
-                <table class="table table-striped mb-0">
+                <table id="productsTable" class="table table-striped mb-0">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -23,7 +23,7 @@
                             <th scope="col" class="text-end">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    {{-- <tbody>
                         <tr v-for="(logo_client, index) in dataTable" :key="index">
                             <td>@{{logo_client.id}}</td>
                             <td>@{{logo_client.name}}</td>
@@ -45,7 +45,7 @@
                                 </div>
                             </td>
                         </tr>
-                    </tbody>
+                    </tbody> --}}
 
                 </table>
             </div>
@@ -58,7 +58,7 @@
 
 @push('js')
     <script>
-        const { createApp, ref } = Vue;
+        const { createApp, ref, onMounted } = Vue;
         createApp({
             setup() {
                 const sampleData=ref({
@@ -84,6 +84,72 @@
                 const dataTable=ref([]);
                 const delete_id=ref(0);
                 const is_edit=ref(false);
+
+                const reloadDataTable = () => {
+                    $('#productsTable').DataTable().ajax.reload(null, false); // Reload without resetting pagination
+                };
+
+                const initDataTable = () => {
+                    const table = $('#productsTable').DataTable({
+                        processing: true,
+                        serverSide: true,
+                        ajax: {
+                            url: '/admin/logoclient/list',
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                        },
+                        columns: [
+                            { data: 'id' },
+                            { data: 'name' },
+                            { data: 'website_url' },
+                            {
+                                data: 'logo_url',
+                                render: function (data) {
+                                    return `<img src="${baseUrl}${data}" style="width: 60px; height: 60px;" />`;
+                                }
+                            },
+                            {
+                                data: 'id',
+                                orderable: false,
+                                searchable: false,
+                                render: function (data) {
+                                    return `
+                                        <button class="btn btn-dark btn-sm edit-btn" data-id="${data}">
+                                            <i class="fa-solid fa-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm delete-btn" data-id="${data}">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    `;
+                                }
+                            }
+                        ],
+                        dom: '<"row"<"col-md-4"l><"col-md-4"B><"col-md-4"f>>' +'<"row"<"col-md-12"tr>>' + '<"row"<"col-md-5"i><"col-md-7"p>>',
+                        buttons: [
+                            { extend: 'copy', className: 'btn btn-dark btn-sm' },
+                            { extend: 'csv', className: 'btn btn-dark btn-sm' },
+                            { extend: 'excel', className: 'btn btn-dark btn-sm' },
+                            { extend: 'pdf', className: 'btn btn-dark btn-sm' },
+                            { extend: 'print', className: 'btn btn-dark btn-sm' }
+                        ]
+                    });
+
+                    // Event listener for edit and delete buttons
+                    $('#productsTable').on('click', '.edit-btn', function () {
+                        const row = table.row($(this).parents('tr')).data();
+                        handleEdit(row);
+                    });
+
+                    $('#productsTable').on('click', '.delete-btn', function () {
+                        const row = table.row($(this).parents('tr')).data();
+                        handleDelete(row.id);
+                    });
+                };
+
+                onMounted(() => {
+                    initDataTable();
+                });
+
                 const getList=async()=>{
                     const {data} = await axios.post('/admin/logoclient/list',{}, { headers: { 'Content-Type': 'multipart/form-data' } });
                     console.log(data);

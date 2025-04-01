@@ -5,16 +5,21 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\LogoClientModel;
+use Yajra\DataTables\DataTables;
 
 class LogoClientController extends Controller
 {
     public function index(){
         return view('admin.logo_client.index');
     }
-    public function list(){
+    public function list(Request $request){
         try {
-            $list=LogoClientModel::get();
-            return $list;
+            // $list=LogoClientModel::get();
+            // return $list;
+            if ($request->ajax()) {
+                $list = LogoClientModel::get();
+                return DataTables::of($list)->make(true);
+            }
         } catch (\Throwable $th) {
             dd($th);
         }

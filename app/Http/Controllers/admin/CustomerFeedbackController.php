@@ -5,16 +5,21 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CustomerFeedbackModel;
+use Yajra\DataTables\DataTables;
 
 class CustomerFeedbackController extends Controller
 {
     public function index(){
         return view('admin.customer_feedback.index');
     }
-    public function list(){
+    public function list(Request $request){
         try {
-            $list=CustomerFeedbackModel::with(['user'])->get();
-            return $list;
+            // $list=CustomerFeedbackModel::with(['user'])->get();
+            // return $list;
+            if ($request->ajax()) {
+                $list = CustomerFeedbackModel::with(['user'])->get();
+                return DataTables::of($list)->make(true);
+            }
         } catch (\Throwable $th) {
             dd($th);
         }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PermissionModel;
+use Yajra\DataTables\DataTables;
 
 
 class PermissionController extends Controller
@@ -11,10 +12,14 @@ class PermissionController extends Controller
     public function index(){
         return view('admin.permission.index');
     }
-    public function list(){
+    public function list(Request $request){
         try {
-            $list=PermissionModel::get();
-            return $list;
+            // $list=PermissionModel::get();
+            // return $list;
+            if ($request->ajax()) {
+                $list = PermissionModel::get();
+                return DataTables::of($list)->make(true);
+            }
         } catch (\Throwable $th) {
             dd($th);
         }

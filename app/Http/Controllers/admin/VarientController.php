@@ -5,16 +5,21 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\VariantModel;
+use Yajra\DataTables\DataTables;
 
 class VarientController extends Controller
 {
     public function index(){
         return view('admin.varient.index');
     }
-    public function list(){
+    public function list(Request $request){
         try {
-            $list=VariantModel::with(['product','unit'])->get();
-            return $list;
+            // $list=VariantModel::with(['product','unit'])->get();
+            // return $list;
+            if ($request->ajax()) {
+                $list = VariantModel::with(['product','unit'])->get();
+                return DataTables::of($list)->make(true);
+            }
         } catch (\Throwable $th) {
             dd($th);
         }

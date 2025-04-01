@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\UserModel;
+use Yajra\DataTables\DataTables;
 
 
 class UserController extends Controller
@@ -16,10 +17,22 @@ class UserController extends Controller
 
         return view('admin.user.index');
     }
-    public function list(){
+    public function list_data(){
         try {
             $list=UserModel::with('role')->get();
             return $list;
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+    }
+    public function list(Request $request){
+        try {
+            // $list=UserModel::with('role')->get();
+            // return $list;
+            if ($request->ajax()) {
+                $list = UserModel::with(['role'])->get();
+                return DataTables::of($list)->make(true);
+            }
         } catch (\Throwable $th) {
             dd($th);
         }

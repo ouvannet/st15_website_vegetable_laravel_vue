@@ -18,7 +18,7 @@
               </div>
             </div>
             <div class="w-100"></div>
-            <div class="col-md-12">
+            <div class="col-md-3">
               <div class="form-group">
                 <label for="country">State / Country</label>
                 <div class="select-wrap">
@@ -35,23 +35,16 @@
                 </div>
               </div>
             </div>
-            <div class="w-100"></div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="streetaddress">Street Address</label>
                 <input v-model="billingDetails.street" type="text" class="form-control" placeholder="House number and street name">
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
               <div class="form-group">
                 <label for="towncity">Town / City</label>
                 <input v-model="billingDetails.city" type="text" class="form-control" placeholder="">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="postcodezip">Postcode / ZIP *</label>
-                <input v-model="billingDetails.postCode" type="text" class="form-control" placeholder="">
               </div>
             </div>
             <div class="col-md-6">
@@ -108,14 +101,14 @@
               <div v-for="(paymethod,index) in dataPaymentMethod" :key="index" class="form-group">
                 <div class="col-md-12">
                   <div class="radio">
-                     <label><input type="radio" name="optradio" class="mr-2"> @{{paymethod.name}}</label>
+                     <label style="display:flex;"><input type="radio" name="optradio" class="mr-2" style="width:25px;height:25px;"> @{{paymethod.name}}</label>
                   </div>
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-md-12">
                   <div class="checkbox">
-                     <label><input type="checkbox" value="" class="mr-2"> I have read and accept the terms and conditions</label>
+                     <label style="display:flex;"><input type="checkbox" value="" class="mr-2" style="width:25px;height:25px;"> I have read and accept the terms and conditions</label>
                   </div>
                 </div>
               </div>

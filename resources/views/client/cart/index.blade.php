@@ -21,10 +21,13 @@
                 const totalDiscount=ref(0);
                 const getCart=()=>{
                     dataCart.value=cartManager.getList();
+                    subTotal.value=0;
                     Object.entries(dataCart.value).forEach(([key, ele]) => {
                         subTotal.value+=(ele.base_price*ele.qty);
                     });
                 }
+                console.log(dataCart);
+
                 getCart();
                 const removeCart=(index)=>{
                     cartManager.removeData(index);
