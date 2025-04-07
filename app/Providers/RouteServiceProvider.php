@@ -97,7 +97,11 @@ class RouteServiceProvider extends ServiceProvider
                     // ✅ Apply web middleware globally
                     // Route::any($routePath, [$controllerClass, $method->name])->middleware('web');
                     if ($routePath !== 'login') {
-                        Route::any($routePath, [$controllerClass, $method->name])->middleware(['web', 'auth']);
+                        if (str_starts_with($routePath, 'client/')) {
+                            Route::any($routePath, [$controllerClass, $method->name])->middleware(['web']);
+                        } elseif (str_starts_with($routePath, 'admin/')) {
+                            Route::any($routePath, [$controllerClass, $method->name])->middleware(['web', 'auth']);
+                        }
                     } else {
                         Route::any($routePath, [$controllerClass, $method->name])->middleware('web');
                     }

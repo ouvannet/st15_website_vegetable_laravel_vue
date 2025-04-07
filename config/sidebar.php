@@ -19,14 +19,14 @@ return [
             'url' => '/admin/sale',
             'text' => 'Sale'
           ],
-          [
-            'url' => '/admin/saleitems',
-            'text' => 'Sale Items'
-          ],
-          [
-            'url' => '/admin/payment',
-            'text' => 'Payment'
-          ],
+        //   [
+        //     'url' => '/admin/saleitems',
+        //     'text' => 'Sale Items'
+        //   ],
+        //   [
+        //     'url' => '/admin/payment',
+        //     'text' => 'Payment'
+        //   ],
           [
             'url' => '/admin/paymentmethod',
             'text' => 'Payment Method'
@@ -72,10 +72,10 @@ return [
             'url' => '/admin/tag',
             'text' => 'Tag'
           ],
-          [
-            'url' => '/admin/blogcomment',
-            'text' => 'Blog Comment'
-          ],
+        //   [
+        //     'url' => '/admin/blogcomment',
+        //     'text' => 'Blog Comment'
+        //   ],
         ]
     ],
     [
@@ -90,14 +90,14 @@ return [
             'url' => '/admin/logoclient',
             'text' => 'Logo Client'
           ],
-          [
-            'url' => '/admin/cart',
-            'text' => 'Cart'
-          ],
-          [
-            'url' => '/admin/wishlist',
-            'text' => 'Wishlist'
-          ],
+        //   [
+        //     'url' => '/admin/cart',
+        //     'text' => 'Cart'
+        //   ],
+        //   [
+        //     'url' => '/admin/wishlist',
+        //     'text' => 'Wishlist'
+        //   ],
         ]
     ],
     [

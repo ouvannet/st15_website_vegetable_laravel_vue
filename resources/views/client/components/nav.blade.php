@@ -1,3 +1,11 @@
+<?php
+$client=[];
+try {
+    session_start();
+    $client=session('client_data');
+} catch (\Throwable $th) {}
+// var_dump($client);
+?>
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
       <a class="navbar-brand" href="/client/home">Vegefoods</a>
@@ -32,6 +40,11 @@
                 <a href="{{ url('/client/cart') }}" class="nav-link">
                     <span class="icon-shopping_cart"></span>
                     [@{{ countDataCart.length }}]
+                </a>
+            </li>
+            <li id="app2" class="nav-item cta cta-colored">
+                <a href="{{ $client?url('/client/cart'):url('/client/login') }}" class="nav-link">
+                    <img src="https://cdn-icons-png.flaticon.com/128/1077/1077114.png" style="width:15px;">
                 </a>
             </li>
         </ul>

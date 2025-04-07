@@ -40,7 +40,7 @@ try {
                     <input type="text" class="form-control" placeholder="Search menu..." />
                 </div>
             </form>
-            <div class="menu-item dropdown">
+            {{-- <div class="menu-item dropdown">
                 <a href="#" data-bs-toggle="dropdown" data-display="static" class="menu-link">
                     <div class="menu-icon"><i class="fa fa-bell nav-icon"></i></div>
                     <div class="menu-label">3</div>
@@ -99,7 +99,7 @@ try {
                         <a href="#" class="text-body text-opacity-50 text-decoration-none">See all</a>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="menu-item dropdown">
                 <a href="#" data-bs-toggle="dropdown" data-display="static" class="menu-link">
                     <div class="menu-img online">
@@ -113,7 +113,8 @@ try {
                     <a class="dropdown-item d-flex align-items-center" href="/calendar">Calendar <i class="fa fa-calendar-alt fa-fw ms-auto text-body text-opacity-50"></i></a>
                     <a class="dropdown-item d-flex align-items-center" href="/settings">Setting <i class="fa fa-wrench fa-fw ms-auto text-body text-opacity-50"></i></a>
                     <div class="dropdown-divider"></div>
-                    <form action="/auth/login/logout" method="POST" class="dropdown-item d-flex align-items-center">
+                    <form action="{{ route('logout') }}" method="POST" class="dropdown-item d-flex align-items-center">
+                        @csrf
                         <button class="dropdown-item d-flex align-items-center" type="submit">Lo gout <i class="fa fa-toggle-off fa-fw ms-auto text-body text-opacity-50"></i></button>
                     </form>
                 </div>

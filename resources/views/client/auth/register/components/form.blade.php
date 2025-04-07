@@ -32,9 +32,9 @@
                           <label for="terms" class="font-light text-gray-500">I accept the <a class="font-medium text-primary-600 hover:underline" href="#">Terms and Conditions</a></label>
                         </div>
                     </div>
-                    <button @click="handleSubmitAdd" type="submit" class="w-full text-white bg-gray-300 mb-3 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Create an account</button>
+                    <button @click="handleSubmitAdd" type="submit" class="w-full text-white bg-[#82ae46] mb-3 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Create an account</button>
                     <p class="text-sm font-light text-gray-500">
-                        Already have an account? <a href="#" class="font-medium text-primary-600 hover:underline">Login here</a>
+                        Already have an account? <a href="/client/login" class="font-medium text-primary-600 hover:underline">Login here</a>
                     </p>
                 </div>
             </div>

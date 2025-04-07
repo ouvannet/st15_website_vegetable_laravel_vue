@@ -9,7 +9,13 @@ use App\Models\PaymentMethodModel;
 class CheckoutController extends Controller
 {
     public function index(){
-        return view('client.checkout.index');
+        $client = session('client_data');
+
+        if (!$client) {
+            return redirect()->route('client.login'); // or: return redirect('/client/login');
+        }
+
+        return view('client.checkout.index', compact('client'));
     }
     public function list(){
         try {

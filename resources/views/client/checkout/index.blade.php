@@ -18,14 +18,14 @@
             setup() {
                 const baseUrl= "{{ asset('') }}";
                 const billingDetails=ref({
-                    firstName:'',
-                    lastName:'',
+                    firstName:"{{$client['full_name']}}",
+                    lastName:"{{$client['full_name']}}",
                     country:'',
-                    street:'',
-                    city:'',
+                    street:"{{$client['address']}}",
+                    city:"{{$client['address']}}",
                     postCode:'',
-                    phone:'',
-                    email:''
+                    phone:"{{$client['phone']}}",
+                    email:"{{$client['email']}}"
                 });
                 const dataCart=ref({});
                 const subTotal=ref(0);
