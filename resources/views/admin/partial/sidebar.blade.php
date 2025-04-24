@@ -1,6 +1,6 @@
 <!-- BEGIN #sidebar -->
 <div id="sidebar" class="app-sidebar">
-    
+
 	<!-- BEGIN scrollbar -->
 	<div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
 		<!-- BEGIN menu -->
@@ -47,6 +47,10 @@
 
 
             foreach (config('sidebar.menu') as $key => $menu) {
+                // dd((user_permission($menu['access'])));
+                // if($menu && user_permission($menu['access'])){
+                //     ($menu['access']);
+                // }
                 $GLOBALS['parent_active'] = '';
 
                 $hasSub = (!empty($menu['children'])) ? 'has-sub' : '';
@@ -75,16 +79,20 @@
                 } else if (!empty($menu['is_divider'])) {
                   echo '<div class="menu-divider"></div>';
                 } else {
-                    echo '
-                        <div class="menu-item '. $hasSub .' '. $active .'">
-                            <a href="'. $menuUrl .'" class="menu-link">
-                                '. $menuIcon .'
-                                '. $menuText .'
-                                '. $menuCaret .'
-                            </a>
-                            '. $menuSubMenu .'
-                        </div>
-                    ';
+                    if((user_permission($menu['access']))){
+                        echo '
+                            <div class="menu-item '. $hasSub .' '. $active .'">
+                                <a href="'. $menuUrl .'" class="menu-link">
+                                    '. $menuIcon .'
+                                    '. $menuText .'
+                                    '. $menuCaret .'
+                                </a>
+                                '. $menuSubMenu .'
+                            </div>
+                        ';
+                    }else{
+                        echo '';
+                    }
                 }
             }
         @endphp

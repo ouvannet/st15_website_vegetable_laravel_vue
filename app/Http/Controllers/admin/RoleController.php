@@ -14,6 +14,14 @@ class RoleController extends Controller
     public function index(){
         return view('admin.role.index');
     }
+    public function list_data(Request $request){
+        try {
+            $list=RoleModel::get();
+            return $list;
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+    }
     public function list(Request $request){
         try {
             // $list=RoleModel::get();

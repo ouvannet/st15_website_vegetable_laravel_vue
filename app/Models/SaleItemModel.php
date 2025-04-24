@@ -9,6 +9,13 @@ class SaleItemModel extends Model
 {
     use HasFactory;
     protected $table = 'tbl_sale_items';
+    protected $fillable = [
+        'sale_id',
+        'varient_id',
+        'quantity',
+        'price_per_unit',
+        'total_price'
+    ];
 
     public function sale()
     {

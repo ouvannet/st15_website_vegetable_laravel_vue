@@ -66,6 +66,36 @@
                     })
                 }
                 getList();
+
+                const placeAndPayment=async()=>{
+                    var bill=billingDetails.value;
+                    var dataInv={
+                        user_id:"{{$client['id']}}"*1,
+                        total_amount:subTotal.value,
+                        payment_method_id:"1",
+                        shipping_address:`${bill.country} ${bill.street} ${bill.city}`
+                    }
+                    console.log(dataInv);
+                    const {data} = await axios.post('/client/checkout/submitcheckout',dataInv, { headers: { 'Content-Type': 'multipart/form-data' } });
+                    console.log(data);
+                    if(data?.id){
+                        var saleItem=Object.values(dataCart.value).map((items,index)=>{
+                            return {
+                                sale_id:data?.id,
+                                varient_id:3,
+                                quantity:items.qty,
+                                price_per_unit:items.base_price*1,
+                                total_price:items.qty*items.base_price
+                            }
+                        })
+                        console.log(saleItem);
+                        const dataItems = await axios.post('/client/checkout/submitcheckoutitems',saleItem, { headers: { 'Content-Type': 'multipart/form-data' } });
+                        console.log(dataItems);
+                        if(dataItems){
+                            cartManager.removeAllData();
+                        }
+                    }
+                }
                 return {
                     baseUrl,
                     getFormattedDate,
@@ -75,7 +105,8 @@
                     subTotal,
                     totalDelivery,
                     totalDiscount,
-                    billingDetails
+                    billingDetails,
+                    placeAndPayment
                 };
             }
         }).mount('#app');

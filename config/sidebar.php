@@ -4,14 +4,17 @@ return [
   'menu' => [
     [
       'text' => 'Navigation',
-      'is_header' => true
+      'is_header' => true,
+      'access' => ('view_header')
     ],
     [
       'url' => '/admin/dashboard',
       'icon' => 'fa-solid fa-chart-line',
-      'text' => 'Dashboard'
+      'text' => 'Dashboard',
+      'access' => ('view_dashboard')
     ],
     [
+        'access' => ('view_sale'),
       'icon' => 'fa fa-money-bill-alt',
       'text' => 'Sales',
       'children' => [
@@ -34,6 +37,7 @@ return [
         ]
     ],
     [
+        'access' => ('view_inventory'),
       'icon' => 'fa-solid fa-store',
       'text' => 'Inventory',
       'children' => [
@@ -61,6 +65,7 @@ return [
       ]
     ],
     [
+        'access' => ('view_blog'),
         'icon' => 'fa-solid fa-thumbs-up',
         'text' => 'Blogs',
         'children' => [
@@ -79,6 +84,7 @@ return [
         ]
     ],
     [
+        'access' => ('view_customer'),
         'icon' => 'fa-solid fa-users',
         'text' => 'Customers',
         'children' => [
@@ -101,6 +107,7 @@ return [
         ]
     ],
     [
+        'access' => ('view_people'),
       'icon' => 'fa-solid fa-user-large',
       'text' => 'People',
       'children' => [
@@ -120,6 +127,7 @@ return [
       ]
     ],
     [
+        'access' => ('view_report'),
       'icon' => 'fa fa-chart-pie',
       'text' => 'Report',
       'children' => [
@@ -140,6 +148,7 @@ return [
       ]
     ],
     [
+        'access' => ('view_report'),
         'icon' => 'fa fa-cog',
         'text' => 'Site Setting',
         'children' => [

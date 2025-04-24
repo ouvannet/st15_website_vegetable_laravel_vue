@@ -112,7 +112,7 @@
                   </div>
                 </div>
               </div>
-              <p><a id="order-btn" class="btn btn-primary py-3 px-4" style="color:white;">Place an order</a></p>
+              <p><a id="order-btn" @click="placeAndPayment" v-if="subTotal>0" class="btn btn-primary py-3 px-4" style="color:white;">Place an order</a></p>
             </div>
           </div>
         </div>

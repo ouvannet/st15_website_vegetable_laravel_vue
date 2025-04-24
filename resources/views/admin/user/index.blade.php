@@ -178,7 +178,7 @@
                         dataTable.value=data;
                     } catch (error) { console.log(error); }
                     try {
-                        var {data} = await axios.post('/admin/role/list',{}, { headers: { 'Content-Type': 'multipart/form-data' } });
+                        var {data} = await axios.post('/admin/role/list_data',{}, { headers: { 'Content-Type': 'multipart/form-data' } });
                         dataRole.value=data;
                     } catch (error) { console.log(error); }
                 }

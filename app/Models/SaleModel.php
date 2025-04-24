@@ -9,6 +9,12 @@ class SaleModel extends Model
 {
     use HasFactory;
     protected $table = 'tbl_sale';
+    protected $fillable = [
+        'user_id',
+        'total_amount',
+        'payment_method_id',
+        'shipping_address'
+    ];
 
     public function user()
     {

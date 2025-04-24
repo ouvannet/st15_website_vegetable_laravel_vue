@@ -20,6 +20,9 @@ export class CacheManager{
         delete list[index]
         this.saveData(list);
     }
+    removeAllData(){
+        this.saveData({});
+    }
     increaseQty(index){
         const list=this.getList();
         if(list[index].qty<list[index].stock_quantity){
