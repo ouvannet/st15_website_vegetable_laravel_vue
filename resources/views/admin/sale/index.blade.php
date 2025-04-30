@@ -56,8 +56,30 @@
                             { data: 'user.full_name' },
                             { data: 'total_amount' },
                             { data: 'payment_method.name' },
-                            { data: 'payment_status' },
-                            { data: 'order_status' },
+                            {
+                                data: 'payment_status',
+                                render: function(data, type, row) {
+                                    const statuses = ['Pending', 'Completed', 'Failed']; // adjust these as per your app
+                                    let select = `<select class="form-select form-select-sm payment-status" data-id="${row.id}">`;
+                                    statuses.forEach(status => {
+                                        select += `<option value="${status.toLowerCase()}" ${data === status.toLowerCase() ? 'selected' : ''}>${status.toLowerCase()}</option>`;
+                                    });
+                                    select += `</select>`;
+                                    return select;
+                                }
+                            },
+                            {
+                                data: 'order_status',
+                                render: function(data, type, row) {
+                                    const statuses = ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'];
+                                    let select = `<select class="form-select form-select-sm order-status" data-id="${row.id}">`;
+                                    statuses.forEach(status => {
+                                        select += `<option value="${status.toLowerCase()}" ${data === status.toLowerCase() ? 'selected' : ''}>${status.toLowerCase()}</option>`;
+                                    });
+                                    select += `</select>`;
+                                    return select;
+                                }
+                            },
                             { data: 'shipping_address' },
                         ],
                         dom: '<"row"<"col-md-4"l><"col-md-4"B><"col-md-4"f>>' +'<"row"<"col-md-12"tr>>' + '<"row"<"col-md-5"i><"col-md-7"p>>',
@@ -69,7 +91,47 @@
                             { extend: 'print', className: 'btn btn-dark btn-sm' }
                         ]
                     });
+                    $('#productsTable tbody').on('change', '.order-status', function () {
+                        const orderId = $(this).data('id');
+                        const newStatus = $(this).val();
+                        $.ajax({
+                            url: `/admin/sale/updatestatus`,
+                            method: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                status: newStatus,
+                                id:orderId
+                            },
+                            success: function (res) {
+                                // alert('Order status updated!');
+                            },
+                            error: function (err) {
+                                // alert('Failed to update status.');
+                            }
+                        });
+                    });
+                    $('#productsTable tbody').on('change', '.payment-status', function () {
+                        const orderId = $(this).data('id');
+                        const newStatus = $(this).val();
+                        $.ajax({
+                            url: `/admin/sale/updatepaymentstatus`,
+                            method: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                payment_status: newStatus,
+                                id: orderId
+                            },
+                            success: function (res) {
+                                // alert('Payment status updated!');
+                            },
+                            error: function (err) {
+                                // alert('Failed to update payment status.');
+                            }
+                        });
+                    });
+
                 };
+
                 onMounted(() => {
                     initDataTable();
                 });

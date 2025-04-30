@@ -42,7 +42,7 @@ export class CacheManager{
     }
     editQty(index,qty){
         const list=this.getList();
-        if(list[index].qty<=list[index].stock_quantity){
+        if(qty<=list[index].stock_quantity){
             list[index].qty=qty;
         }else{
             return false;

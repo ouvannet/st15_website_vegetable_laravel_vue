@@ -12,15 +12,15 @@
             setup() {
                 const sampleData=ref({
                     formAdd:{
-                        email:'',
-                        password:''
+                        email:'client@gmail.com',
+                        password:'123'
                     }
                 });
                 const formAdd=ref(sampleData.value.formAdd)
                 const handleSubmitAdd=async()=>{
                     const {data} = await axios.post('/client/login/login',formAdd.value, { headers: { 'Content-Type': 'multipart/form-data' } });
                     if(data){
-                        window.location.replace("/client/home");
+                        window.location.replace("/client/profile");
                     }
                     formAdd.value=sampleData.value.formAdd;
                 }

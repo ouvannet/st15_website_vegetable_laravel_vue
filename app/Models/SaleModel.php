@@ -13,7 +13,8 @@ class SaleModel extends Model
         'user_id',
         'total_amount',
         'payment_method_id',
-        'shipping_address'
+        'shipping_address',
+        'order_status'
     ];
 
     public function user()

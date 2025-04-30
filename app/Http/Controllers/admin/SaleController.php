@@ -24,4 +24,30 @@ class SaleController extends Controller
         }
 
     }
+
+    public function updatestatus(Request $req){
+        // dd($req);
+        $sale = SaleModel::findOrFail($req->id);
+        $sale->order_status = $req->status;
+        $sale->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Order status updated successfully',
+            'data' => $sale
+        ]);
+    }
+
+    public function updatepaymentstatus(Request $req){
+        // dd($req);
+        $sale = SaleModel::findOrFail($req->id);
+        $sale->payment_status = $req->payment_status;
+        $sale->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Order status updated successfully',
+            'data' => $sale
+        ]);
+    }
 }
