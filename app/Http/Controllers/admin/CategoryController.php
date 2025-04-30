@@ -12,6 +12,14 @@ class CategoryController extends Controller
     public function index(){
         return view('admin.category.index');
     }
+    public function list_data(Request $request){
+        try {
+            $list = CategoryModel::get();
+            return $list;
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+    }
     public function list(Request $request){
         try {
             // $list=CategoryModel::get();

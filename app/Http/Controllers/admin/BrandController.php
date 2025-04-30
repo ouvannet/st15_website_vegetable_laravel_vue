@@ -12,6 +12,10 @@ class BrandController extends Controller
     public function index(){
         return view('admin.brand.index');
     }
+    public function  list_data(Request $request) {
+        $list = BrandModel::get();
+        return $list;
+    }
     public function list(Request $request){
         try {
             // $list=BrandModel::get();

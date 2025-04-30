@@ -3,6 +3,7 @@
 @section('title', 'Cart Page')
 
 @section('content')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <div id="app">
         @include('client.cart.components.slide')
         @include('client.cart.components.items_list')
@@ -33,8 +34,29 @@
                     cartManager.removeData(index);
                     getCart();
                 }
+                const updateQty=(index,qty)=>{
+                    if(!cartManager.editQty(index,qty)){
+                        Swal.fire({
+                        position: "top-end",
+                        icon: "error",
+                        title: "you can't add more",
+                        showConfirmButton: false,
+                        timer: 1500
+                        });
+                    }
+                    getCart();
+
+                }
                 const increaseQty=(index)=>{
-                    cartManager.increaseQty(index);
+                    if(!cartManager.increaseQty(index)){
+                        Swal.fire({
+                        position: "top-end",
+                        icon: "error",
+                        title: "you can't add more",
+                        showConfirmButton: false,
+                        timer: 1500
+                        });
+                    }
                     getCart();
                 }
                 const decreaseQty=(index)=>{
@@ -49,6 +71,7 @@
                     totalDelivery,
                     totalDiscount,
                     removeCart,
+                    updateQty,
                     increaseQty,
                     decreaseQty
                 };

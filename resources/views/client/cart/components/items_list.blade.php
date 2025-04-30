@@ -30,7 +30,7 @@
                                 <td class="quantity">
                                     <div class="input-group mb-3">
                                         <button @click="decreaseQty(cart.id)" style="width:50px;font-size:20px;">-</button>
-                                        <input type="text" name="quantity" class="quantity form-control input-number" :value="cart.qty" min="1" max="100">
+                                        <input  @input="updateQty(cart.id, $event.target.value)" type="text" name="quantity" class="quantity form-control input-number" :value="cart.qty" min="1" max="100">
                                         <button @click="increaseQty(cart.id)" style="width:50px;font-size:20px;">+</button>
                                     </div>
                                 </td>

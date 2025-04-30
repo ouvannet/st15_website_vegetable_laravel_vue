@@ -27,8 +27,11 @@ export class CacheManager{
         const list=this.getList();
         if(list[index].qty<list[index].stock_quantity){
             list[index].qty++;
+        }else{
+            return false;
         }
         this.saveData(list);
+        return true;
     }
     decreaseQty(index){
         const list=this.getList();
@@ -39,8 +42,13 @@ export class CacheManager{
     }
     editQty(index,qty){
         const list=this.getList();
-        list[index].qty=qty;
+        if(list[index].qty<=list[index].stock_quantity){
+            list[index].qty=qty;
+        }else{
+            return false;
+        }
         this.saveData(list);
+        return true;
     }
     checkExist(data){
         const list=this.getList();

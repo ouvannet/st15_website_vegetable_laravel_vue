@@ -43,7 +43,7 @@ try {
                 </a>
             </li>
             <li id="app2" class="nav-item cta cta-colored">
-                <a href="{{ $client?url('/client/cart'):url('/client/login') }}" class="nav-link">
+                <a href="{{ $client?url('/client/profile'):url('/client/login') }}" class="nav-link">
                     <img src="https://cdn-icons-png.flaticon.com/128/1077/1077114.png" style="width:15px;">
                 </a>
             </li>

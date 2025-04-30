@@ -12,16 +12,21 @@
                             <th>Paid By</th>
                             <th>Payment Status</th>
                             <th>Order Status</th>
+                            <th>Delivery Status</th>
                             <th>Address</th>
                           </tr>
                         </thead>
                         <tbody>
                             <tr v-for="( sale,index ) in dataSale" :key="index" class="text-center">
                                 <td class="product-name">
-                                    <h3>@{{sale.name}}</h3>
+                                    <h3 @click="viewINV(sale)" style="color: rgb(67, 67, 255);cursor: pointer;">INV1234567</h3>
                                 </td>
-                                <td class="price">$@{{sale.base_price}}</td>
-                                <td class="total">$@{{sale.base_price*sale.qty}}</td>
+                                <td class="price">$@{{sale.total_amount}}</td>
+                                <td class="total">@{{sale.payment_method.name}}</td>
+                                <td class="total">@{{sale.payment_status}}</td>
+                                <td class="total">@{{sale.order_status}}</td>
+                                <td class="total">@{{sale.order_status}}</td>
+                                <td class="total">@{{sale.shipping_address}}</td>
                             </tr><!-- END TR-->
                         </tbody>
                       </table>

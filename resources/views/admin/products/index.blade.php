@@ -244,19 +244,19 @@
 
                 const getList=async()=>{
                     try {
-                        var {data} = await axios.post('/admin/products/list',{}, { headers: { 'Content-Type': 'multipart/form-data' } });
+                        var {data} = await axios.post('/admin/products/list_data',{}, { headers: { 'Content-Type': 'multipart/form-data' } });
                         dataTable.value=data;
                     } catch (error) { console.log(error); }
                     try {
-                        var {data} = await axios.post('/admin/category/list',{}, { headers: { 'Content-Type': 'multipart/form-data' } });
+                        var {data} = await axios.post('/admin/category/list_data',{}, { headers: { 'Content-Type': 'multipart/form-data' } });
                         dataCategory.value=data;
                     } catch (error) { console.log(error); }
                     try {
-                        var {data} = await axios.post('/admin/brand/list',{}, { headers: { 'Content-Type': 'multipart/form-data' } });
+                        var {data} = await axios.post('/admin/brand/list_data',{}, { headers: { 'Content-Type': 'multipart/form-data' } });
                         dataBrand.value=data;
                     } catch (error) { console.log(error); }
                     try {
-                        var {data} = await axios.post('/admin/unit/list',{}, { headers: { 'Content-Type': 'multipart/form-data' } });
+                        var {data} = await axios.post('/admin/unit/list_data',{}, { headers: { 'Content-Type': 'multipart/form-data' } });
                         dataUnit.value=data;
                     } catch (error) { console.log(error); }
                 }
